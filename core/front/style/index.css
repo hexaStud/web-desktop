@@ -4,6 +4,53 @@
     font-family: var(--base-font);
 }
 
+#desktop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: var(--bg-image);
+}
+
+#desktop #icons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: calc(100% - 50px);
+    width: 100%;
+    display: grid;
+}
+
+#desktop #icons > div.dragHover {
+    background-color: rgba(0, 118, 201, 0.25);
+}
+
+#desktop #icons > div > div {
+    text-align: center;
+    display: grid;
+    grid-template-rows: 45px 20px;
+}
+
+#desktop #icons > div > div:hover {
+    background-color: rgba(0, 149, 255, 0.25);
+}
+
+#desktop #icons > div > div img {
+    margin: 0 auto;
+    height: 45px;
+    width: auto;
+}
+
+#desktop #taskbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
 #login {
     position: fixed;
     top: 0;

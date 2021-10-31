@@ -4,6 +4,7 @@ const login_1 = require("./login");
 const font_1 = require("../../main/font");
 const bcrypt = require("bcrypt");
 const Sound_1 = require("../../main/Sound");
+const desktop_1 = require("./desktop");
 let USER;
 window.addEventListener("load", () => {
     document.head.appendChild(font_1.Font.buildFont());
@@ -35,6 +36,7 @@ window.addEventListener("load", () => {
             if (!!(e = Sound_1.Sound.get("startup.mp3"))) {
                 e.play();
             }
+            desktop_1.Desktop.load(USER);
             (_a = document.getElementById("login")) === null || _a === void 0 ? void 0 : _a.remove();
         }
         else {

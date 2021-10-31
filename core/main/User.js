@@ -11,6 +11,7 @@ class User {
         log(`Create user ${username}`);
         fs.mkdirSync(path.join(env_1.__root, env_1.DATA_NAME, "users", username));
         [
+            "system",
             "desktop",
             "documents",
             "programs",
@@ -19,6 +20,19 @@ class User {
         ].forEach((value) => {
             log(`Create ${value}`);
             fs.mkdirSync(path.join(env_1.__root, env_1.DATA_NAME, "users", username, value));
+        });
+        [
+            {
+                p: "desktop/desktop",
+                v: code_database_1.Crypto.encode("[]", env_1.DESKTOP_PSW)
+            },
+            {
+                p: "system/protocol",
+                v: code_database_1.Crypto.encode("[]", env_1.PROTOCOL_PSW)
+            }
+        ].forEach((value) => {
+            log(`Write ${value.p}`);
+            fs.writeFileSync(path.join(env_1.__root, env_1.DATA_NAME, "users", username, value.p), value.v);
         });
         const user = {
             admin: admin,

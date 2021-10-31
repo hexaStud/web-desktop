@@ -5,4 +5,6 @@ export const __root: string = path.join(__dirname, "..");
 export const __front: string = path.join(__root, "core", "front");
 
 export const DATA_NAME: string = "data";
-export const USER_PSW: string = Crypto.encode("user_data_web_desktop", "user_data_web_desktop");
+export const USER_PSW: string = Crypto.encode("user_data_web_desktop", "user_data_web_desktop"); // TODO hide password
+export const DESKTOP_PSW: string = Crypto.encode("desktop_data_web_desktop", "desktop_data_web_desktop"); // TODO hide password
+export const PROTOCOL_PSW: string = Crypto.encode("protocol_data_web_desktop", "protocol_data_web_desktop"); // TODO hide password

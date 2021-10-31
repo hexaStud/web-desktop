@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import {__root, DATA_NAME, USER_PSW} from "../env";
+import {__root, DATA_NAME, DESKTOP_PSW, PROTOCOL_PSW, USER_PSW} from "../env";
 import * as path from "path";
 import {IUser} from "./IUser";
 import {Crypto} from "code-database";
@@ -10,6 +10,7 @@ export class User {
         log(`Create user ${username}`);
         fs.mkdirSync(path.join(__root, DATA_NAME, "users", username));
         [
+            "system",
             "desktop",
             "documents",
             "programs",
@@ -18,6 +19,20 @@ export class User {
         ].forEach((value) => {
             log(`Create ${value}`);
             fs.mkdirSync(path.join(__root, DATA_NAME, "users", username, value));
+        });
+
+        [
+            {
+                p: "desktop/desktop",
+                v: Crypto.encode("[]", DESKTOP_PSW)
+            },
+            {
+                p: "system/protocol",
+                v: Crypto.encode("[]", PROTOCOL_PSW)
+            }
+        ].forEach((value) => {
+            log(`Write ${value.p}`);
+            fs.writeFileSync(path.join(__root, DATA_NAME, "users", username, value.p), value.v);
         });
 
         const user: IUser = {

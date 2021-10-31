@@ -29,6 +29,7 @@ export class Installer {
             "users",
             "system",
             "system/sounds",
+            "system/img",
             "system/fonts",
             "system/programs",
             "system/config",

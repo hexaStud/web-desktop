@@ -3,6 +3,7 @@ import {Login} from "./login";
 import {Font} from "../../main/font";
 import * as bcrypt from "bcrypt";
 import {Sound} from "../../main/Sound";
+import {Desktop} from "./desktop";
 
 let USER: IUser;
 
@@ -39,7 +40,7 @@ window.addEventListener("load", () => {
             if (!!(e = Sound.get("startup.mp3"))) {
                 e.play();
             }
-
+            Desktop.load(USER);
             document.getElementById("login")?.remove();
         } else {
             // @ts-ignore
