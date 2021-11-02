@@ -18,16 +18,21 @@ export class Protocol {
         return JSON.parse(Crypto.decode(fs.readFileSync(path.join(__root, DATA_NAME, "users", usr.username, "system", "protocol"), "utf-8"), PROTOCOL_PSW));
     }
 
-    public static exec(usr: IUser, file: File) {
+    private static executeProtocol(prt: IProtocol): void {
+        console.log("TODO write executing");
+        // TODO write executing
+    }
+
+    public static exec(usr: IUser, file: File): void {
         const prs: IProtocol[] = Protocol.getProtocol(usr);
         for (const value of prs) {
             if (value.extension === file.ext) {
-
-                // TODO write executing
-
+                Protocol.executeProtocol(value);
                 return;
             }
         }
+
+        Protocol.executeProtocol(Protocol.defaultProtocol);
     }
 
     public static getProtocolFromExtension(usr: IUser, file: File): IProtocol {

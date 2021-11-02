@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import {__root, DATA_NAME, DESKTOP_PSW, PROTOCOL_PSW, USER_PSW} from "../env";
+import {__root, DATA_NAME, DESKTOP_PSW, PROTOCOL_PSW, TASKBAR_PSW, USER_PSW} from "../env";
 import * as path from "path";
 import {IUser} from "./IUser";
 import {Crypto} from "code-database";
@@ -11,6 +11,7 @@ export class User {
         fs.mkdirSync(path.join(__root, DATA_NAME, "users", username));
         [
             "system",
+            "system/taskbar",
             "desktop",
             "documents",
             "programs",
@@ -29,6 +30,10 @@ export class User {
             {
                 p: "system/protocol",
                 v: Crypto.encode("[]", PROTOCOL_PSW)
+            },
+            {
+                p: "system/taskbar/taskbar",
+                v: Crypto.encode("[]", TASKBAR_PSW)
             }
         ].forEach((value) => {
             log(`Write ${value.p}`);

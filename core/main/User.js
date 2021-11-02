@@ -12,6 +12,7 @@ class User {
         fs.mkdirSync(path.join(env_1.__root, env_1.DATA_NAME, "users", username));
         [
             "system",
+            "system/taskbar",
             "desktop",
             "documents",
             "programs",
@@ -29,6 +30,10 @@ class User {
             {
                 p: "system/protocol",
                 v: code_database_1.Crypto.encode("[]", env_1.PROTOCOL_PSW)
+            },
+            {
+                p: "system/taskbar/taskbar",
+                v: code_database_1.Crypto.encode("[]", env_1.TASKBAR_PSW)
             }
         ].forEach((value) => {
             log(`Write ${value.p}`);

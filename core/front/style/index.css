@@ -1,4 +1,5 @@
 @import "default.css";
+@import "window.css";
 
 * {
     font-family: var(--base-font);

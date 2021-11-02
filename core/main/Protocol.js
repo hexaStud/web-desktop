@@ -10,13 +10,18 @@ class Protocol {
     static getProtocol(usr) {
         return JSON.parse(code_database_1.Crypto.decode(fs.readFileSync(path.join(env_1.__root, env_1.DATA_NAME, "users", usr.username, "system", "protocol"), "utf-8"), env_1.PROTOCOL_PSW));
     }
+    static executeProtocol(prt) {
+        console.log("TODO write executing");
+    }
     static exec(usr, file) {
         const prs = Protocol.getProtocol(usr);
         for (const value of prs) {
             if (value.extension === file.ext) {
+                Protocol.executeProtocol(value);
                 return;
             }
         }
+        Protocol.executeProtocol(Protocol.defaultProtocol);
     }
     static getProtocolFromExtension(usr, file) {
         const prs = Protocol.getProtocol(usr);

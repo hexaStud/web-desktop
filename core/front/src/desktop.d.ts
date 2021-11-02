@@ -4,6 +4,10 @@ export declare namespace Desktop {
         position: number;
         file: string;
     }
+    interface ITaskbar {
+        position: number;
+        file: string;
+    }
     function load(usr: IUser): void;
 }
 //# sourceMappingURL=desktop.d.ts.map
