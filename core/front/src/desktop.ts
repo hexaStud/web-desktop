@@ -1,15 +1,20 @@
 import {IUser} from "../../main/IUser";
 import * as path from "path";
-import {__root, DATA_NAME, DESKTOP_PSW, TASKBAR_PSW, USER_PSW} from "../../env";
+import {ipcRenderer} from "electron";
+import {__root, DATA_NAME, DESKTOP_PSW, TASKBAR_PSW} from "../../env";
 import {Crypto, ExtendedArray} from "code-database";
 import * as fs from "fs";
-import {Protocol} from "../../main/Protocol";
-import {IProtocol} from "../../main/IProtocol";
+import {Protocol} from "../../plug/Protocol";
+import {IProtocol} from "../../plug/IProtocol";
 import {File} from "../../main/File";
-import {Window} from "../../main/Window";
+import {UI} from "../../plug/UI";
+import {Assets} from "../../plug/Sound";
+import Window = UI.Window;
+import Dialog = UI.QuestionDialog;
+import Sound = Assets.Sound;
 
 export namespace Desktop {
-    const windows: Window[] = [];
+
 
     export interface IDesktopIcon {
         position: number,
@@ -82,8 +87,8 @@ export namespace Desktop {
     }
 
     export function load(usr: IUser) {
-        const desktopEle: HTMLElement = <HTMLElement>document.getElementById("icons");
-        const taskbarEle: HTMLElement = <HTMLElement>document.getElementById("taskbar");
+        const desktopEle: HTMLElement = <HTMLElement>document.getElementById("desktopIcons");
+        const taskbarEle: HTMLElement = <HTMLElement>document.getElementById("taskbarIcons");
 
         let desktop: string = path.join(__root, DATA_NAME, "users", usr.username, "desktop");
         let conf: IDesktopIcon[] = getDesktop(usr);
@@ -163,6 +168,56 @@ export namespace Desktop {
                     ele.appendChild(createIcon(usr, value, value.position));
                 }
             }
+        });
+
+        (<HTMLElement>document.getElementById("taskbarMenuIcon")).addEventListener("click", () => {
+            (<HTMLElement>document.getElementById("taskbarMenu")).classList.toggle("active");
+        });
+
+        (<HTMLElement>document.getElementById("taskbarMenuRestart")).addEventListener("click", function () {
+            // @ts-ignore
+            if (!!this.dia) {
+                let e;
+
+                if (!!(e = Sound.get("error.mp3"))) {
+                    e.play();
+                }
+
+                return;
+            }
+            const dialog: Dialog = new Dialog("Do you want really restart the pc"); // TODO add translation service
+            // @ts-ignore
+            this.dia = dialog;
+            dialog.await().then((value: boolean) => {
+                if (value) {
+                    ipcRenderer.send("restart", "");
+                }
+                // @ts-ignore
+                this.dia = undefined;
+            });
+        });
+
+        (<HTMLElement>document.getElementById("taskbarMenuQuit")).addEventListener("click", function () {
+            // @ts-ignore
+            if (!!this.dia) {
+                let e;
+
+                if (!!(e = Sound.get("error.mp3"))) {
+                    e.play();
+                }
+
+                return;
+            }
+            const dialog: Dialog = new Dialog("Do you want really shutdown the pc"); // TODO add translation service
+            // @ts-ignore
+            this.dia = dialog;
+            dialog.await().then((value: boolean) => {
+                if (value) {
+                    ipcRenderer.send("shutdown", "");
+                }
+                // @ts-ignore
+                this.dia = undefined;
+            });
         });
 
         taskbarEle.innerHTML = "";

@@ -16,6 +16,14 @@ electron_1.app.on("ready", () => {
             nodeIntegrationInWorker: true
         }
     });
+    electron_1.ipcMain.on("shutdown", () => {
+        win.destroy();
+        electron_1.app.quit();
+    });
+    electron_1.ipcMain.on("restart", () => {
+        win.destroy();
+        electron_1.app.relaunch();
+    });
     win.setMenu(null);
     win.webContents.openDevTools();
     if (!fs.existsSync(path.join(env_1.__root, env_1.DATA_NAME))) {

@@ -2,15 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Desktop = void 0;
 const path = require("path");
+const electron_1 = require("electron");
 const env_1 = require("../../env");
 const code_database_1 = require("code-database");
 const fs = require("fs");
-const Protocol_1 = require("../../main/Protocol");
+const Protocol_1 = require("../../plug/Protocol");
 const File_1 = require("../../main/File");
-const Window_1 = require("../../main/Window");
+const UI_1 = require("../../plug/UI");
+const Sound_1 = require("../../plug/Sound");
+var Window = UI_1.UI.Window;
+var Dialog = UI_1.UI.QuestionDialog;
+var Sound = Sound_1.Assets.Sound;
 var Desktop;
 (function (Desktop) {
-    const windows = [];
     function getTaskbar(usr) {
         let taskbar = path.join(env_1.__root, env_1.DATA_NAME, "users", usr.username, "system", "taskbar");
         return JSON.parse(code_database_1.Crypto.decode(fs.readFileSync(path.join(taskbar, "taskbar"), "utf-8"), env_1.TASKBAR_PSW));
@@ -59,8 +63,8 @@ var Desktop;
         return div;
     }
     function load(usr) {
-        const desktopEle = document.getElementById("icons");
-        const taskbarEle = document.getElementById("taskbar");
+        const desktopEle = document.getElementById("desktopIcons");
+        const taskbarEle = document.getElementById("taskbarIcons");
         let desktop = path.join(env_1.__root, env_1.DATA_NAME, "users", usr.username, "desktop");
         let conf = getDesktop(usr);
         console.log(conf);
@@ -130,6 +134,43 @@ var Desktop;
                 }
             }
         });
+        document.getElementById("taskbarMenuIcon").addEventListener("click", () => {
+            document.getElementById("taskbarMenu").classList.toggle("active");
+        });
+        document.getElementById("taskbarMenuRestart").addEventListener("click", function () {
+            if (!!this.dia) {
+                let e;
+                if (!!(e = Sound.get("error.mp3"))) {
+                    e.play();
+                }
+                return;
+            }
+            const dialog = new Dialog("Do you want really restart the pc");
+            this.dia = dialog;
+            dialog.await().then((value) => {
+                if (value) {
+                    electron_1.ipcRenderer.send("restart", "");
+                }
+                this.dia = undefined;
+            });
+        });
+        document.getElementById("taskbarMenuQuit").addEventListener("click", function () {
+            if (!!this.dia) {
+                let e;
+                if (!!(e = Sound.get("error.mp3"))) {
+                    e.play();
+                }
+                return;
+            }
+            const dialog = new Dialog("Do you want really shutdown the pc");
+            this.dia = dialog;
+            dialog.await().then((value) => {
+                if (value) {
+                    electron_1.ipcRenderer.send("shutdown", "");
+                }
+                this.dia = undefined;
+            });
+        });
         taskbarEle.innerHTML = "";
         let tasks = getTaskbar(usr);
         tasks.forEach((value) => {
@@ -141,7 +182,7 @@ var Desktop;
             div.appendChild(img);
             taskbarEle.appendChild(div);
         });
-        let test = new Window_1.Window();
+        let test = new Window();
         test.open();
     }
     Desktop.load = load;

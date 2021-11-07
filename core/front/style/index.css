@@ -14,7 +14,7 @@
     background-image: var(--bg-image);
 }
 
-#desktop #icons {
+#desktop #desktopIcons {
     position: absolute;
     top: 0;
     left: 0;
@@ -23,24 +23,40 @@
     display: grid;
 }
 
-#desktop #icons > div.dragHover {
+#desktop #desktopIcons > div.dragHover {
     background-color: rgba(0, 118, 201, 0.25);
 }
 
-#desktop #icons > div > div {
+#desktop #desktopIcons > div > div {
     text-align: center;
     display: grid;
     grid-template-rows: 45px 20px;
 }
 
-#desktop #icons > div > div:hover {
+#desktop #desktopIcons > div > div:hover {
     background-color: rgba(0, 149, 255, 0.25);
 }
 
-#desktop #icons > div > div img {
+#desktop #desktopIcons > div > div img {
     margin: 0 auto;
     height: 45px;
     width: auto;
+}
+
+#desktop #taskbarMenu {
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    height: 400px;
+    width: 300px;
+    display: none;
+    grid-template-columns: auto auto;
+    background-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.68);
+}
+
+#desktop #taskbarMenu.active {
+    display: grid;
 }
 
 #desktop #taskbar {

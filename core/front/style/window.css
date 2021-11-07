@@ -16,6 +16,7 @@
     -moz-transition: width .25s linear, height .25s linear, top .25s linear, left .25s linear;
     -webkit-transition: width .25s linear, height .25s linear, top .25s linear, left .25s linear;
     transition: width .25s linear, height .25s linear, top .25s linear, left .25s linear;
+    border: none;
 }
 
 .window.active {
@@ -44,14 +45,21 @@
     margin-top: -3px;
 }
 
-.icon:hover span, .maximized .icon span {
+.window .icon:hover span, .window .maximized .icon span {
     border-color: #e7e7e7;
 }
 
+.window .icon .muted {
+    color: #aaaaaa;
+}
+
 .window > .content {
-    height: auto;
-    width: auto;
     padding: 5px;
+}
+
+.window.maximized > .content {
+    height: calc(100% - 13px * 2);
+    width: calc(100% - 8px);
 }
 
 .window > .content > iframe {

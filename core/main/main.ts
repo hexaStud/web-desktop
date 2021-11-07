@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import {__front, __root, DATA_NAME} from "../env";
 import {Installer} from "./installer";
-import {app, BrowserWindow} from "electron";
+import {app, BrowserWindow, ipcMain} from "electron";
 
 app.on("ready", () => {
     const win: BrowserWindow = new BrowserWindow({
@@ -14,6 +14,16 @@ app.on("ready", () => {
             nodeIntegration: true,
             nodeIntegrationInWorker: true
         }
+    });
+
+    ipcMain.on("shutdown", () => {
+        win.destroy();
+        app.quit();
+    });
+
+    ipcMain.on("restart", () => {
+        win.destroy();
+        app.relaunch();
     });
 
     win.setMenu(null);

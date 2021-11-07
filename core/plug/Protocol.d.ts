@@ -1,5 +1,5 @@
-import { IUser } from "./IUser";
-import { File } from "./File";
+import { IUser } from "../main/IUser";
+import { File } from "../main/File";
 import { IProtocol } from "./IProtocol";
 export declare class Protocol {
     private static defaultProtocol;

@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const login_1 = require("./login");
-const font_1 = require("../../main/font");
+const font_1 = require("../../plug/font");
 const bcrypt = require("bcrypt");
-const Sound_1 = require("../../main/Sound");
+const Assets_1 = require("../../plug/Assets");
 const desktop_1 = require("./desktop");
+var Sound = Assets_1.Assets.Sound;
 let USER;
 window.addEventListener("load", () => {
     document.head.appendChild(font_1.Font.buildFont());
@@ -33,7 +34,7 @@ window.addEventListener("load", () => {
         e.preventDefault();
         if (USER.password === false || bcrypt.compareSync(document.forms["loginForm"]["password"].value, USER.password)) {
             let e;
-            if (!!(e = Sound_1.Sound.get("startup.mp3"))) {
+            if (!!(e = Sound.get("startup.mp3"))) {
                 e.play();
             }
             desktop_1.Desktop.load(USER);

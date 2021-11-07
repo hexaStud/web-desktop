@@ -1,11 +1,12 @@
-import {IUser} from "./IUser";
-import {File} from "./File";
+import {IUser} from "../main/IUser";
+import {File} from "../main/File";
 import {IProtocol} from "./IProtocol";
 import {Crypto} from "code-database";
 import * as fs from "fs";
 import * as path from "path";
 import {__root, DATA_NAME, PROTOCOL_PSW} from "../env";
-import {Image} from "./Image";
+import {Assets} from "./Assets";
+import Image = Assets.Image;
 
 export class Protocol {
     private static defaultProtocol: IProtocol = {

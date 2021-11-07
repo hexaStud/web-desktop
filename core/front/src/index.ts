@@ -1,9 +1,10 @@
 import {IUser} from "../../main/IUser";
 import {Login} from "./login";
-import {Font} from "../../main/font";
+import {Font} from "../../plug/font";
 import * as bcrypt from "bcrypt";
-import {Sound} from "../../main/Sound";
+import {Assets} from "../../plug/Assets";
 import {Desktop} from "./desktop";
+import Sound = Assets.Sound;
 
 let USER: IUser;
 
